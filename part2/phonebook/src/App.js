@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
-import Person from "./components/Person";
+import PersonForm from "./components/PersonForm";
+import Filter from "./components/Filter";
+import PersonList from "./components/PersonList";
 
 
 const App = () => {
@@ -12,6 +14,8 @@ const App = () => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [newSearch, setNewSearch] = useState('')
+
+    console.log(newName)
 
     const handleSearch = (event) => {
         setNewSearch(event.target.value)
@@ -27,7 +31,6 @@ const App = () => {
             name: newName,
             number: newNumber
         }
-
         persons.find(person => person.name === newName) ? alert(`${newName} is already added to phonebook`) :
             setPersons(persons.concat(personObject))
         setNewName('')
@@ -37,24 +40,11 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
-            <div>filter shown with <input value={newSearch} onChange={handleSearch}/></div>
+            <Filter newSearch={newSearch} handleSearch={handleSearch}/>
             <h2>Add a new</h2>
-            <form onSubmit={addPerson}>
-                <div>
-                    name: <input name={'name'} value={newName} onChange={handleChange}/>
-                </div>
-                <div>
-                    number: <input name={'number'} value={newNumber} onChange={handleChange}/>
-                </div>
-                <div>
-                    <button type="submit">add</button>
-                </div>
-            </form>
+            <PersonForm submission={addPerson} changeHandler={handleChange} name={newName} number={newNumber}/>
             <h2>Numbers</h2>
-            <ul>
-                {persons.filter(p => p.name.toLowerCase().includes(newSearch.toLowerCase())).map(person => <Person
-                    key={person.name} person={person}/>)}
-            </ul>
+            <PersonList persons={persons} filter={newSearch}/>
         </div>
     )
 }
