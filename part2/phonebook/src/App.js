@@ -4,7 +4,6 @@ import Filter from "./components/Filter";
 import PersonList from "./components/PersonList";
 import axios from "axios";
 
-
 const App = () => {
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
@@ -39,6 +38,7 @@ const App = () => {
         setNewNumber('')
     }
 
+
     return (
         <div>
             <h2>Phonebook</h2>
@@ -47,7 +47,9 @@ const App = () => {
             <PersonForm submission={addPerson} changeHandler={handleChange} name={newName} number={newNumber}/>
             <h2>Numbers</h2>
             <PersonList persons={persons} filter={newSearch}/>
+
         </div>
+
     )
 }
 
