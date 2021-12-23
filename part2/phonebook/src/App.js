@@ -12,6 +12,9 @@ const App = () => {
     const [newSearch, setNewSearch] = useState('')
     const [errorMessage, setErrorMessage] = useState(null)
 
+
+    // Up to exercises 3.19
+
     useEffect(() => {
         phonebookService.getAll()
             .then(response => setPersons(response))
@@ -28,13 +31,13 @@ const App = () => {
 
     const updatePerson = (personToUpdate, number) => {
         if (window.confirm(`${personToUpdate.name} is already added to phonebook. Replace the old number with a new one?`)) {
-            phonebookService.update(personToUpdate.id, {...personToUpdate, number: number})
-                .then(returnedPerson => {
-                    setPersons(persons.map(person => person.id !== personToUpdate.id ? person : returnedPerson))
-                    setNewName('')
-                    setNewNumber('')
+                phonebookService.update(personToUpdate.id, {...personToUpdate, number: number})
+                    .then(returnedPerson => {
+                        setPersons(persons.map(person => person.id !== personToUpdate.id ? person : returnedPerson))
+                        setNewName('')
+                        setNewNumber('')
 
-                })
+                    })
 
         } else {
             console.log('fail');
@@ -61,7 +64,7 @@ const App = () => {
                         setNewNumber('')
 
                     }
-                )
+                ).catch(() => alert('please ensure all field contain info'))
     }
     const deletePerson = (id) => {
         phonebookService.remove(id).then(() => {
@@ -96,8 +99,6 @@ const App = () => {
 
     )
 }
-
-
 
 
 export default App
